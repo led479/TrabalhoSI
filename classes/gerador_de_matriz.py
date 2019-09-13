@@ -1,16 +1,9 @@
-from random import randrange
+import random
 
 class GeradorDeMatriz:
     def __init__(self):
-        self.numeros_ja_gerados = []
-
-    def numero_entre_1_e_9_nao_repetido(self):
-        num = randrange(9) + 1
-        if num not in self.numeros_ja_gerados:
-            self.numeros_ja_gerados.append(num)
-            return num
-        else:
-            return self.numero_entre_1_e_9_nao_repetido()
+        self.numeros_disponiveis = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        random.shuffle(self.numeros_disponiveis)
 
     # Retorna uma matriz com 8 números entre 1 e 8, e um espaço vazio (None)
     # Ex:   [   [5, 3, 4],
@@ -22,7 +15,7 @@ class GeradorDeMatriz:
 
         for i in range(len(m)):
             for j in range(len(m[i])):
-                m[i][j] = self.numero_entre_1_e_9_nao_repetido()
+                m[i][j] = self.numeros_disponiveis.pop()
 
         # Troca o 9 por None, que representará o estado vazio
         for i in range(len(m)):
