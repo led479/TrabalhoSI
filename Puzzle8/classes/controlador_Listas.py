@@ -1,3 +1,5 @@
+from operator import attrgetter
+from classes.estado import Estado
 
 class Controlador_Listas:
 
@@ -8,6 +10,7 @@ class Controlador_Listas:
     def adicionar_estado_abertos(self, estado):
         if(self.__estado_ja_conhecido(estado) == False):
             self.__estados_abertos.append(estado)
+            self.__estados_abertos.sort(key=attrgetter("custo"))
             return True
         return False
         
@@ -37,7 +40,3 @@ class Controlador_Listas:
                     if (estado1.matriz[i][j] != estado2.matriz[i][j]):
                         return False
         return True
-
-    def __ordenar_lista(self):
-        pass
-        

@@ -8,23 +8,24 @@ class Controlador_Buscas:
         self.__estado_inicial = estado_inicial
 
     def busca_custo_uniforme(self):
+
         print("1º Método: Custo Uniforme (sem heurística)\n")
         print("===========================================================\n")
 
-        #print("Estado inicial:")
-        #self.imprimir_Estado(self.__estado_inicial)
+        print("Estado inicial:")
+        self.imprimir_Estado(self.__estado_inicial)
         lista_estados = Controlador_Listas()
 
         lista_estados.adicionar_estado_abertos(self.__estado_inicial)
         
         while(True):
             estado_aberto = lista_estados.abir_nodo()
-            print("\n===== Novo Estado =====")
-            self.imprimir_Estado(estado_aberto)
+            #print("\n===== Novo Estado =====")
+            #self.imprimir_Estado(estado_aberto)
 
             # Fazer a verificação
             if(estado_aberto.matriz != self.__estado_final()):
-                print("\nNão é o estado final. Gerando filhos...")
+                #print("\nNão é o estado final. Gerando filhos...")
                 filhos = self.__filhos(estado_aberto)
 
                 for filho in filhos:
@@ -36,13 +37,13 @@ class Controlador_Buscas:
 
                     status_estado = lista_estados.adicionar_estado_abertos(filho)
                     # Imprime o filho somente se é um novo estado
-                    if(status_estado):
-                        print("\n===== FILHO =====")
-                        self.imprimir_Estado(filho)
+                    #if(status_estado):
+                    #    print("\n===== FILHO =====")
+                    #    self.imprimir_Estado(filho)
             else:
                 # Exibir os resultados
                 print("Encontrou estado final....")
-                
+                break
             print(f"\nCUSTO ESTADO: {estado_aberto.custo}")
             print(f"NODOS ABERTOS: {len(lista_estados._Controlador_Listas__estados_abertos)}")
             print(f"NODOS VISITADOS: {len(lista_estados._Controlador_Listas__estados_visitados)}")
