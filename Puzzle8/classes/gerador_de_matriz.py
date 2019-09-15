@@ -16,5 +16,4 @@ class GeradorDeMatriz:
         for i in range(len(m)):
             for j in range(len(m[i])):
                 m[i][j] = self.numeros_disponiveis.pop()
-
         return m

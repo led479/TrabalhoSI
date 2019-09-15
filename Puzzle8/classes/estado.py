@@ -22,7 +22,6 @@ class Estado:
         posicao_baixo = self.validar_filho(posicao_vazio[0] + 1, posicao_vazio[1])
         posicao_esquerda = self.validar_filho(posicao_vazio[0], posicao_vazio[1] - 1)
 
-
         movimentos = [posicao_cima, posicao_direita, posicao_baixo, posicao_esquerda]
 
         filhos = []
@@ -39,7 +38,6 @@ class Estado:
               for j in range(len(self.matriz[i])):
                   if(self.matriz[i][j] == None):
                       return [i, j]
-        return []
 
     @staticmethod
     def estado_final():
