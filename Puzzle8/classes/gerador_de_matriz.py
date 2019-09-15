@@ -11,9 +11,9 @@ class GeradorDeMatriz:
     #           [1, 6, 8]
     #       ]
     def gera_matriz_aleatoria(self):
-        m = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-
+        m = [[1, 2, 3], [4, 5, 6], [7, 8, None]]
         for i in range(len(m)):
             for j in range(len(m[i])):
                 m[i][j] = self.numeros_disponiveis.pop()
         return m
+

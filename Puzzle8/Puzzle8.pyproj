@@ -21,6 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="classes\controlador_Buscas.py" />
+    <Compile Include="classes\controlador_Listas.py" />
     <Compile Include="classes\estado.py" />
     <Compile Include="classes\gerador_de_matriz.py" />
     <Compile Include="main.py" />
