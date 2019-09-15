@@ -4,11 +4,16 @@ class Estado:
     def __init__(self):
         self.matriz = GeradorDeMatriz().gera_matriz_aleatoria()
 
+        # Guarda Instância do estado Pai
+        self.estado_pai = None
+
         # TODO Adicionar algoritmo para custo
         self.custo = 0
 
         # TODO Adicionar algoritmo para heurística
         self.heuristica = None
+
+
 
     def indice_do_vazio(self):
         for i in range(len(self.matriz)):

@@ -11,46 +11,49 @@ class Controlador_Buscas:
         print("1º Método: Custo Uniforme (sem heurística)\n")
         print("===========================================================\n")
 
-        print("Estado inicial:")
-        self.imprimir_Estado(self.__estado_inicial)
-        lista_nodos = Controlador_Listas()
+        #print("Estado inicial:")
+        #self.imprimir_Estado(self.__estado_inicial)
+        lista_estados = Controlador_Listas()
 
-        lista_nodos.adicionar_estado_abertos(self.__estado_inicial, 0)
+        lista_estados.adicionar_estado_abertos(self.__estado_inicial)
         
         while(True):
-            nodo_aberto = lista_nodos.abir_nodo()
+            estado_aberto = lista_estados.abir_nodo()
+            print("\n===== Novo Estado =====")
+            self.imprimir_Estado(estado_aberto)
+
             # Fazer a verificação
-            if(nodo_aberto.matriz != self.__estado_final()):
+            if(estado_aberto.matriz != self.__estado_final()):
                 print("\nNão é o estado final. Gerando filhos...")
-                filhos = self.__filhos(nodo_aberto)
+                filhos = self.__filhos(estado_aberto)
+
                 for filho in filhos:
-                    lista_nodos.adicionar_estado_abertos(filho, 1)
-                    print("\n========================== FILHO ==========================")
-                    self.imprimir_Estado(filho)
+                    # Estado Filho guarda referencia ao estado Pai
+                    filho.estado_pai = estado_aberto
+
+                    # Custo filho, custo do pai + 1 movimento
+                    filho.custo = estado_aberto.custo + 1
+
+                    status_estado = lista_estados.adicionar_estado_abertos(filho)
+                    # Imprime o filho somente se é um novo estado
+                    if(status_estado):
+                        print("\n===== FILHO =====")
+                        self.imprimir_Estado(filho)
             else:
                 # Exibir os resultados
                 print("Encontrou estado final....")
+                
+            print(f"\nCUSTO ESTADO: {estado_aberto.custo}")
+            print(f"NODOS ABERTOS: {len(lista_estados._Controlador_Listas__estados_abertos)}")
+            print(f"NODOS VISITADOS: {len(lista_estados._Controlador_Listas__estados_visitados)}")
 
-        #nodo_aberto = lista_nodos.abir_nodo()
-
-        ## Fazer a verificação
-        #if(nodo_aberto.matriz != self.__estado_final()):
-        #    print("\nNão é o estado final. Gerando filhos...")
-        #    filhos = self.__filhos(nodo_aberto)
-        #    for filho in filhos:
-        #        lista_nodos.adicionar_estado_abertos(filho, 1)
-        #        print("\n========================== FILHO ==========================")
-        #        self.imprimir_Estado(filho)
-        #else:
-        #    # Exibir os resultados
-        #    print("Encontrou estado final....")
 
 
      # Gera Matriz para Imprimir 
     def imprimir_Estado(self, estado):
-        print(f"                {estado.matriz[0]}")
-        print(f"                {estado.matriz[1]}")
-        print(f"                {estado.matriz[2]}")
+        print(estado.matriz[0])
+        print(estado.matriz[1])
+        print(estado.matriz[2])
 
     # Estado final do objeto
     def __estado_final(self):
@@ -88,9 +91,11 @@ class Controlador_Buscas:
 
     # Gera um filho de um estado, a próxima jogada
     def __gerar_filho(self, posicao_vazio, movimento, nodo):
+        
         # Copia a matriz atual
         filho = deepcopy(nodo)
         ## ===================> Inicia o movimento da peça
+        
         # Guarda o elemento da posição á qual será movido o espaço em branco
         elemento = filho.matriz[movimento[0]][movimento[1]]
         
@@ -99,5 +104,6 @@ class Controlador_Buscas:
 
         # Inseri espaço em branco na nova posição
         filho.matriz[movimento[0]][movimento[1]] = None
+        
         ## ===================>Finaliza o movimento da peça
         return filho
