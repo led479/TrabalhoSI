@@ -1,10 +1,9 @@
 from classes.estado import Estado
-from classes.controlador_Listas import Controlador_Listas
-from classes.controlador_Buscas import Controlador_Buscas
+from classes.controlador_buscas import ControladorBuscas
 
 print("==================== Métodos de busca ====================\n")
 estado_inicial = Estado()
-buscas = Controlador_Buscas(estado_inicial);
+buscas = ControladorBuscas(estado_inicial)
 buscas.busca_custo_uniforme()
 
 #A entrada do programa é um tabuleiro desordenado (com o quadrado sem número em qualquer lugar do tabuleiro).
