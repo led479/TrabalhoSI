@@ -1,4 +1,4 @@
-from .gerador_de_matriz import GeradorDeMatriz
+from classes.gerador_de_matriz import GeradorDeMatriz
 from copy import deepcopy
 
 class Estado:
