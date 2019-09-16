@@ -3,12 +3,18 @@ from copy import deepcopy
 
 class Estado:
     def __init__(self):
-        self.matriz = GeradorDeMatriz().gera_matriz_aleatoria()
+        # Algoritmo muito lento para matriz aleatória;
+        # Foram feitas algumas matrizes na mão para rodar em tempo hábil...
+        # self.matriz = GeradorDeMatriz.gera_matriz_aleatoria()
+
+        # self.matriz = GeradorDeMatriz.matriz_final()
+        # self.matriz = GeradorDeMatriz.matriz_rapida_1()
+        # self.matriz = GeradorDeMatriz.matriz_rapida_2()
+        self.matriz = GeradorDeMatriz.matriz_rapida_3()
 
         # Guarda Instância do estado Pai
         self.pai = None
 
-        # TODO Adicionar algoritmo para custo
         self.custo = 0
 
         # TODO Adicionar algoritmo para heurística

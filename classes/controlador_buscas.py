@@ -33,7 +33,11 @@ class ControladorBuscas:
             print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
                 
         # Exibir os resultados
+        print('========================')
         print("Encontrou estado final!!")
+
+        self.imprime_caminho(estado_aberto)
+
 
 
 
@@ -42,6 +46,14 @@ class ControladorBuscas:
         print(estado.matriz[0])
         print(estado.matriz[1])
         print(estado.matriz[2])
+        print("--------------")
+
+    def imprime_caminho(self, estado):
+        atual = estado
+        while(atual):
+            print("Custo: " + str(atual.custo))
+            self.imprime_matriz(atual)
+            atual = atual.pai
 
     # Estado final do objeto
     def __matriz_final(self):
