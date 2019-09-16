@@ -1,25 +1,17 @@
-from classes.gerador_de_matriz import GeradorDeMatriz
+from classes.calculador_heuristica import CalculadorHeuristica
 from copy import deepcopy
 
 class Estado:
-    def __init__(self):
-        # Algoritmo muito lento para matriz aleatória;
-        # Foram feitas algumas matrizes na mão para rodar em tempo hábil...
-        # self.matriz = GeradorDeMatriz.gera_matriz_aleatoria()
+    def __init__(self, matriz, pai=None):
+        self.matriz = matriz
+        self.pai = pai
+        self.custo = pai.custo + 1 if pai else 0
 
-        # self.matriz = GeradorDeMatriz.matriz_final()
-        # self.matriz = GeradorDeMatriz.matriz_rapida_1()
-        # self.matriz = GeradorDeMatriz.matriz_rapida_2()
-        self.matriz = GeradorDeMatriz.matriz_rapida_3()
+        # Já está funcionando!!! Somente esta linha é alterada para utilizar as heurísticas
+        self.heuristica = 0
+        # self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica()
 
-        # Guarda Instância do estado Pai
-        self.pai = None
-
-        self.custo = 0
-
-        # TODO Adicionar algoritmo para heurística
-        self.heuristica = None
-
+        self.custo_total = self.custo + self.heuristica
 
     def filhos(self):
         posicao_vazio = self.__indice_do_vazio()
@@ -42,10 +34,9 @@ class Estado:
 
     def __indice_do_vazio(self):
         for i in range(len(self.matriz)):
-              for j in range(len(self.matriz[i])):
-                  if(self.matriz[i][j] == None):
-                      return { 'linha': i, 'coluna': j }
-
+            for j in range(len(self.matriz[i])):
+                if(self.matriz[i][j] == None):
+                    return { 'linha': i, 'coluna': j }
 
     # Verifica se proxima movimento estrapola o limite da matriz
     def __validar_movimento(self, linha, coluna):
@@ -56,20 +47,11 @@ class Estado:
 
     # Gera um filho de um estado, a próxima jogada
     def __gera_filho(self, posicao_vazio, movimento):
-        
-        # Copia a matriz atual
-        filho = deepcopy(self)
-        ## ===================> Inicia o movimento da peça
-        
-        # Antigo espaço em branco recebe o elemento
-        filho.matriz[posicao_vazio['linha']][posicao_vazio['coluna']] = filho.matriz[movimento['linha']][movimento['coluna']]
+        # Cria uma nova matriz trocando as posições do None com a peça na posição do movimento
+        matriz = deepcopy(self.matriz)
+        matriz[posicao_vazio['linha']][posicao_vazio['coluna']] = matriz[movimento['linha']][movimento['coluna']]
+        matriz[movimento['linha']][movimento['coluna']] = None
 
-        # Insere espaço em branco na nova posição
-        filho.matriz[movimento['linha']][movimento['coluna']] = None
+        filho = Estado(matriz, self)
 
-        filho.pai = self
-        filho.custo = self.custo + 1
-        
-        ## ===================>Finaliza o movimento da peça
         return filho
-    

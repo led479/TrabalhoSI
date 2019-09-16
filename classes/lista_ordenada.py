@@ -7,5 +7,5 @@ class ListaOrdenada:
 
     def append(self, estado):
         self.lista.append(estado)
-        self.lista.sort(key=attrgetter("custo"))
+        self.lista.sort(key=attrgetter("custo_total"))
 

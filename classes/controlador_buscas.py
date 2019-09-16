@@ -25,23 +25,20 @@ class ControladorBuscas:
             filhos = estado_aberto.filhos()
             for filho in filhos:
                 listas.adiciona_estado_se_nao_for_conhecido(filho)
-            
+
             estado_aberto = listas.abir_nodo()
 
             print(f"\nCUSTO ESTADO: {estado_aberto.custo}")
             print(f"NODOS ABERTOS: {len(listas.estados_abertos.lista)}")
             print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
-                
+
         # Exibir os resultados
         print('========================')
         print("Encontrou estado final!!")
-
         self.imprime_caminho(estado_aberto)
+        print('========================')
 
-
-
-
-     # Gera Matriz para Imprimir 
+     # Gera Matriz para Imprimir
     def imprime_matriz(self, estado):
         print(estado.matriz[0])
         print(estado.matriz[1])
@@ -52,6 +49,7 @@ class ControladorBuscas:
         atual = estado
         while(atual):
             print("Custo: " + str(atual.custo))
+            print("Valor Heurística: " + str(atual.heuristica))
             self.imprime_matriz(atual)
             atual = atual.pai
 
