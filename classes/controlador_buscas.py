@@ -1,21 +1,32 @@
 from classes.estado import Estado
 from classes.controlador_listas import ControladorListas
+from classes.gerador_de_matriz import GeradorDeMatriz
 from copy import deepcopy
 
 class ControladorBuscas:
 
-    def __init__(self, estado_inicial):
-        self.__estado_inicial = estado_inicial
+    def __init__(self):
+        self.matriz_inical = GeradorDeMatriz.matriz_rapida_3()
 
     def busca_custo_uniforme(self):
-
         print("1º Método: Custo Uniforme (sem heurística)\n")
         print("===========================================================\n")
         print("Estado inicial:")
-        self.imprime_matriz(self.__estado_inicial)
+        estado_inicial = Estado(self.matriz_inical)
+        self.busca(estado_inicial)
 
+    def busca_com_heuristica(self):
+        print("2º Método: Busca com Heurística\n")
+        print("===========================================================\n")
+        print("Estado inicial:")
+        estado_inicial_com_heuristica = Estado(self.matriz_inical, None, True)        
+        self.busca(estado_inicial_com_heuristica)
+
+        
+
+    def busca(self, estado_inicial):
         listas = ControladorListas()
-        listas.adiciona_estado_se_nao_for_conhecido(self.__estado_inicial)
+        listas.adiciona_estado_se_nao_for_conhecido(estado_inicial)
 
         estado_aberto = listas.abir_nodo()
         while(estado_aberto.matriz != self.__matriz_final()):
@@ -38,7 +49,7 @@ class ControladorBuscas:
         self.imprime_caminho(estado_aberto)
         print('========================')
 
-     # Gera Matriz para Imprimir
+    # Gera Matriz para Imprimir
     def imprime_matriz(self, estado):
         print(estado.matriz[0])
         print(estado.matriz[1])

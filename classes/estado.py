@@ -2,14 +2,13 @@ from classes.calculador_heuristica import CalculadorHeuristica
 from copy import deepcopy
 
 class Estado:
-    def __init__(self, matriz, pai=None):
+    def __init__(self, matriz, pai=None, usar_heuristica=False):
         self.matriz = matriz
         self.pai = pai
         self.custo = pai.custo + 1 if pai else 0
 
-        # Já está funcionando!!! Somente esta linha é alterada para utilizar as heurísticas
-        self.heuristica = 0
-        # self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica()
+        self.usar_heuristica = usar_heuristica
+        self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica() if usar_heuristica else 0
 
         self.custo_total = self.custo + self.heuristica
 
@@ -52,6 +51,6 @@ class Estado:
         matriz[posicao_vazio['linha']][posicao_vazio['coluna']] = matriz[movimento['linha']][movimento['coluna']]
         matriz[movimento['linha']][movimento['coluna']] = None
 
-        filho = Estado(matriz, self)
+        filho = Estado(matriz, self, self.usar_heuristica)
 
         return filho
