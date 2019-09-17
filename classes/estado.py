@@ -1,14 +1,21 @@
 from classes.calculador_heuristica import CalculadorHeuristica
+from enums.tipo_heuristica import TipoHeuristica
 from copy import deepcopy
 
 class Estado:
-    def __init__(self, matriz, pai=None, usar_heuristica=False):
+    def __init__(self, matriz, tipo_heuristica, pai=None):
         self.matriz = matriz
         self.pai = pai
         self.custo = pai.custo + 1 if pai else 0
 
-        self.usar_heuristica = usar_heuristica
-        self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica() if usar_heuristica else 0
+        self.tipo_heuristica = tipo_heuristica
+
+        if   tipo_heuristica == TipoHeuristica.sem:
+            self.heuristica = 0
+        elif tipo_heuristica == TipoHeuristica.simples:
+            self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica_simples()
+        elif tipo_heuristica == TipoHeuristica.complexa:
+            self.heuristica = CalculadorHeuristica(self.matriz).calcula_heuristica_complexa()
 
         self.custo_total = self.custo + self.heuristica
 
@@ -51,6 +58,6 @@ class Estado:
         matriz[posicao_vazio['linha']][posicao_vazio['coluna']] = matriz[movimento['linha']][movimento['coluna']]
         matriz[movimento['linha']][movimento['coluna']] = None
 
-        filho = Estado(matriz, self, self.usar_heuristica)
+        filho = Estado(matriz, self.tipo_heuristica, self)
 
         return filho

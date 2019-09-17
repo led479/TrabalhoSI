@@ -8,8 +8,11 @@ print("==================== Métodos de busca ====================\n")
 
 
 buscas = ControladorBuscas()
-#buscas.busca_custo_uniforme()
-buscas.busca_com_heuristica()
+
+# TODO fazer usuário poder escolher entre uma das 3 buscas
+buscas.busca_custo_uniforme()
+#buscas.busca_com_heuristica_simples()
+#buscas.busca_com_heuristica_complexa()
 
 
 #A entrada do programa é um tabuleiro desordenado (com o quadrado sem número em qualquer lugar do tabuleiro).

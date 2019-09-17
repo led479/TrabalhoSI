@@ -1,7 +1,11 @@
 from classes.estado import Estado
 from classes.controlador_listas import ControladorListas
 from classes.gerador_de_matriz import GeradorDeMatriz
+from enums.tipo_heuristica import TipoHeuristica
+
 from copy import deepcopy
+import time
+
 
 class ControladorBuscas:
 
@@ -11,43 +15,46 @@ class ControladorBuscas:
     def busca_custo_uniforme(self):
         print("1º Método: Custo Uniforme (sem heurística)\n")
         print("===========================================================\n")
-        print("Estado inicial:")
-        estado_inicial = Estado(self.matriz_inical)
+        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.sem)
         self.busca(estado_inicial)
 
-    def busca_com_heuristica(self):
-        print("2º Método: Busca com Heurística\n")
+    def busca_com_heuristica_simples(self):
+        print("2º Método: Busca com Heurística Simples\n")
         print("===========================================================\n")
-        print("Estado inicial:")
-        estado_inicial_com_heuristica = Estado(self.matriz_inical, None, True)        
-        self.busca(estado_inicial_com_heuristica)
+        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.simples)
+        self.busca(estado_inicial)
 
-        
+    def busca_com_heuristica_complexa(self):
+        print("3º Método: Busca com Heurística Complexa\n")
+        print("===========================================================\n")
+        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.complexa)
+        self.busca(estado_inicial)
+
 
     def busca(self, estado_inicial):
+
+        print('Buscando...')
+        start = time.time()
+
         listas = ControladorListas()
         listas.adiciona_estado_se_nao_for_conhecido(estado_inicial)
 
         estado_aberto = listas.abir_nodo()
         while(estado_aberto.matriz != self.__matriz_final()):
-
-            self.imprime_matriz(estado_aberto)
-
             filhos = estado_aberto.filhos()
             for filho in filhos:
                 listas.adiciona_estado_se_nao_for_conhecido(filho)
 
             estado_aberto = listas.abir_nodo()
 
-            print(f"\nCUSTO ESTADO: {estado_aberto.custo}")
-            print(f"NODOS ABERTOS: {len(listas.estados_abertos.lista)}")
-            print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
-
         # Exibir os resultados
-        print('========================')
-        print("Encontrou estado final!!")
+        print('Terminou!')
+        end = time.time()
         self.imprime_caminho(estado_aberto)
-        print('========================')
+        print(f"\nCUSTO ESTADO FINAL: {estado_aberto.custo}")
+        print(f"NODOS ABERTOS: {len(listas.estados_abertos.lista)}")
+        print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
+        print(f"Algoritmo levou {end - start} segundos")
 
     # Gera Matriz para Imprimir
     def imprime_matriz(self, estado):
@@ -58,11 +65,14 @@ class ControladorBuscas:
 
     def imprime_caminho(self, estado):
         atual = estado
+        print('=========CAMINHO==========')
         while(atual):
-            print("Custo: " + str(atual.custo))
-            print("Valor Heurística: " + str(atual.heuristica))
+            print(f"Custo: {atual.custo}")
+            print(f"Valor Heurística: {atual.heuristica}")
+            print(f"Custo total (custo + heurística): {atual.custo + atual.heuristica}")
             self.imprime_matriz(atual)
             atual = atual.pai
+        print('==========FIM-CAMINHO============')
 
     # Estado final do objeto
     def __matriz_final(self):

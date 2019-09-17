@@ -3,16 +3,29 @@ class CalculadorHeuristica:
     def __init__(self, matriz):
         self.matriz = matriz
 
-    def calcula_heuristica(self):
-            soma = 0
-            for i in range(len(self.matriz)):
-                for j in range(len(self.matriz[i])):
-                    peca_atual = self.matriz[i][j]
-                    posicao_final = self.posicoes_finais()[peca_atual]
+    def calcula_heuristica_simples(self):
+        soma = 9
+        for i in range(len(self.matriz)):
+            for j in range(len(self.matriz[i])):
+                peca_atual = self.matriz[i][j]
+                posicao_final = self.posicoes_finais()[peca_atual]
 
-                    # Distância da posição atual até a posição final da peça
-                    soma += abs(posicao_final['linha'] - i) + abs(posicao_final['coluna'] - j)
-            return soma
+                # Se a peça_atual está em sua posição final, retira 1
+                if (i == posicao_final['linha'] and j == posicao_final['coluna']):
+                    soma -= 1
+        return soma
+
+
+    def calcula_heuristica_complexa(self):
+        soma = 0
+        for i in range(len(self.matriz)):
+            for j in range(len(self.matriz[i])):
+                peca_atual = self.matriz[i][j]
+                posicao_final = self.posicoes_finais()[peca_atual]
+
+                # Distância da posição atual até a posição final da peça
+                soma += abs(posicao_final['linha'] - i) + abs(posicao_final['coluna'] - j)
+        return soma
 
     @staticmethod
     def posicoes_finais():
