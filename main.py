@@ -8,13 +8,13 @@ from enums.tipo_matriz import TipoMatriz
 # Foram feitas algumas matrizes na mão para rodar em tempo hábil...
 # matriz_inical = GeradorDeMatriz.gera_matriz_aleatoria()
 while(True):
-    print("========================= Tipo de Matriz =========================\n")
+    print("============================= Tipo de Matriz =============================\n")
     print("1 | Matriz: Aleatoria: O Algorítmo pode gerar uma matriz sem solução.")
     print("2 | Matriz: Rapida 1: Matriz que possui um estado final.")
     print("3 | Matriz: Rapida 2: Matriz que possui um estado final.")
     print("4 | Matriz: Rapida 3: Matriz que possui um estado final.")
     print("0 | Sair.")
-    print("\n================================================================\n")
+    print("\n=======================================================================\n")
 
     tipo_matriz = eval(input("Qual tipo de matriz deseja executar [1|2|3|4]: "))
     while (tipo_matriz < 0 or tipo_matriz > 4):
@@ -35,12 +35,12 @@ while(True):
 
     ############################################################################################
     # Escolha do tipo de algoritmo
-    print("\n==================== Métodos de busca ====================\n")
+    print("\n=========================== Métodos de busca ===========================\n")
     print("1 | Método: Busca Com Custo Uniforme.")
     print("2 | Método: Busca Com Heurística Simples.")
     print("3 | Método: Busca Com Heurística Complexa.")
     print("0 | Sair.")
-    print("\n==========================================================\n")
+    print("\n========================================================================\n")
 
     tipo_buca = eval(input("Qual método de busca deseja executar [1|2|3]: "))
     while(tipo_buca < 0 or tipo_buca > 3):

@@ -23,30 +23,30 @@ class ControladorBuscas:
             return GeradorDeMatriz().matriz_rapida_3()
 
     def busca_custo_uniforme(self):
-        print("===========================================================\n")
-        print("Método: Custo Uniforme (sem heurística).\n")
-        print("===========================================================\n")
+        print("\n========================================================================")
+        print("================== Método: Custo Uniforme (sem heurística) =============")
+        print("========================================================================\n")
         estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.sem)
         self.busca(estado_inicial)
 
     def busca_com_heuristica_simples(self):
-        print("===========================================================\n")
-        print("Método: Busca com Heurística Simples.\n")
-        print("===========================================================\n")
+        print("\n========================================================================")
+        print("================== Método: Busca com Heurística Simples ================")
+        print("========================================================================\n")
         estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.simples)
         self.busca(estado_inicial)
 
     def busca_com_heuristica_complexa(self):
-        print("===========================================================\n")
-        print("Método: Busca com Heurística Complexa.\n")
-        print("===========================================================\n")
+        print("\n========================================================================")
+        print("================ Método: Busca com Heurística Complexa =================")
+        print("========================================================================\n")
         estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.complexa)
         self.busca(estado_inicial)
 
 
     def busca(self, estado_inicial):
 
-        print('Buscando...')
+        print('Buscando...\n')
         start = time.time()
 
         listas = ControladorListas()
@@ -61,7 +61,7 @@ class ControladorBuscas:
             estado_aberto = listas.abir_nodo()
 
         # Exibir os resultados
-        print('Terminou!')
+        print('Terminou!\n')
         end = time.time()
         self.imprime_caminho(estado_aberto)
         print(f"\nCUSTO (TAMANHO): {estado_aberto.custo}")
@@ -74,18 +74,22 @@ class ControladorBuscas:
         print(estado.matriz[0])
         print(estado.matriz[1])
         print(estado.matriz[2])
-        print("--------------")
+        print("-------------------------------------")
 
     def imprime_caminho(self, estado):
         atual = estado
-        print('=========CAMINHO==========')
+        caminho_ordenado = []
         while(atual):
+            caminho_ordenado.insert(0, atual)
+            atual = atual.pai
+        
+        print('============== CAMINHO ==============\n')
+        for atual in caminho_ordenado:
             print(f"Custo: {atual.custo}")
             print(f"Valor Heurística: {atual.heuristica}")
             print(f"Custo total (custo + heurística): {atual.custo + atual.heuristica}")
             self.imprime_matriz(atual)
-            atual = atual.pai
-        print('==========FIM-CAMINHO============')
+        print('\n============ FIM CAMINHO ============')
 
     # Estado final do objeto
     def __matriz_final(self):
