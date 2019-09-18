@@ -2,32 +2,45 @@ from classes.estado import Estado
 from classes.controlador_listas import ControladorListas
 from classes.gerador_de_matriz import GeradorDeMatriz
 from enums.tipo_heuristica import TipoHeuristica
-
+from enums.tipo_matriz import TipoMatriz
 from copy import deepcopy
 import time
 
 
 class ControladorBuscas:
 
-    def __init__(self):
-        self.matriz_inical = GeradorDeMatriz.matriz_rapida_3()
+    def __init__(self, tipo_matriz):
+        self.matriz_inicial = self.gerar_matriz(tipo_matriz)
+
+    def gerar_matriz(self, tipo_matriz):
+        if(tipo_matriz == TipoMatriz.aleatoria):
+            return GeradorDeMatriz().gera_matriz_aleatoria()
+        elif(tipo_matriz == TipoMatriz.rapida1):
+            return GeradorDeMatriz().matriz_rapida_1()
+        elif(tipo_matriz == TipoMatriz.rapida2):
+            return GeradorDeMatriz().matriz_rapida_2()
+        elif(tipo_matriz == TipoMatriz.rapida3):
+            return GeradorDeMatriz().matriz_rapida_3()
 
     def busca_custo_uniforme(self):
-        print("1º Método: Custo Uniforme (sem heurística)\n")
         print("===========================================================\n")
-        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.sem)
+        print("Método: Custo Uniforme (sem heurística).\n")
+        print("===========================================================\n")
+        estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.sem)
         self.busca(estado_inicial)
 
     def busca_com_heuristica_simples(self):
-        print("2º Método: Busca com Heurística Simples\n")
         print("===========================================================\n")
-        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.simples)
+        print("Método: Busca com Heurística Simples.\n")
+        print("===========================================================\n")
+        estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.simples)
         self.busca(estado_inicial)
 
     def busca_com_heuristica_complexa(self):
-        print("3º Método: Busca com Heurística Complexa\n")
         print("===========================================================\n")
-        estado_inicial = Estado(self.matriz_inical, TipoHeuristica.complexa)
+        print("Método: Busca com Heurística Complexa.\n")
+        print("===========================================================\n")
+        estado_inicial = Estado(self.matriz_inicial, TipoHeuristica.complexa)
         self.busca(estado_inicial)
 
 
@@ -51,7 +64,7 @@ class ControladorBuscas:
         print('Terminou!')
         end = time.time()
         self.imprime_caminho(estado_aberto)
-        print(f"\nCUSTO ESTADO FINAL: {estado_aberto.custo}")
+        print(f"\nCUSTO (TAMANHO): {estado_aberto.custo}")
         print(f"NODOS ABERTOS: {len(listas.estados_abertos.lista)}")
         print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
         print(f"Algoritmo levou {end - start} segundos")
