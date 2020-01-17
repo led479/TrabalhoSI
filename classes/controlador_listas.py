@@ -9,19 +9,19 @@ class ControladorListas:
             self.estados_visitados = []
 
     def adiciona_estado_se_nao_for_conhecido(self, estado):
-        if(self.__estado_ja_conhecido(estado) == False):
+        if(not self.__estado_ja_conhecido(estado)):
             self.estados_abertos.append(estado)
             return True
         return False
         
     def abir_nodo(self):
-        estado_aberto = self.estados_abertos.lista.pop(0)
+        estado_aberto = self.estados_abertos.pop(0)
         self.estados_visitados.append(estado_aberto)
         return estado_aberto
 
     # Verifica se estado já conhecido, se já foi aberto e não foi visitado ou já foi visitado
     def __estado_ja_conhecido(self, estado):
-        for estado_aberto in self.estados_abertos.lista:
+        for estado_aberto in self.estados_abertos:
             if(estado_aberto.matriz == estado.matriz):
                 return True
         

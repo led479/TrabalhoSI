@@ -30,7 +30,7 @@ while(True):
         elif(tipo_matriz == 4):
             buscas = ControladorBuscas(TipoMatriz.rapida3)
         elif(tipo_matriz == 0):
-            exit("By")
+            exit("Bye")
             break
 
     ############################################################################################
@@ -54,11 +54,11 @@ while(True):
         elif(tipo_buca == 3):
             buscas.busca_com_heuristica_complexa()
         elif(tipo_buca == 4):
-            exit("By2")
+            exit("Bye")
             break
     print("\n============================================================================================================")
-    nova_busca = input("\nDeseja executar novamente ? Digite 'SIM' ou aperte qualquer tecla para encerrar o programa: ")
-    if(nova_busca != "SIM" and nova_busca != "sim" and nova_busca != "S" and nova_busca != "s"):
+    nova_busca = input("\nDeseja executar novamente ? Digite 's' para executar novamente ou aperte qualquer outra tecla para encerrar o programa: ")
+    if(nova_busca.upper() != "S" and nova_busca != "SIM"):
         break
 
 

@@ -1,11 +1,5 @@
-from operator import attrgetter
-
-class ListaOrdenada:
-
-    def __init__(self):
-        self.lista = []
+class ListaOrdenada(list):
 
     def append(self, estado):
-        self.lista.append(estado)
-        self.lista.sort(key=attrgetter("custo_total"))
-
+        super().append(estado)
+        self.sort(key=lambda x: x.custo_total)

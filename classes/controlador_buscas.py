@@ -13,14 +13,12 @@ class ControladorBuscas:
         self.matriz_inicial = self.gerar_matriz(tipo_matriz)
 
     def gerar_matriz(self, tipo_matriz):
-        if(tipo_matriz == TipoMatriz.aleatoria):
-            return GeradorDeMatriz().gera_matriz_aleatoria()
-        elif(tipo_matriz == TipoMatriz.rapida1):
-            return GeradorDeMatriz().matriz_rapida_1()
-        elif(tipo_matriz == TipoMatriz.rapida2):
-            return GeradorDeMatriz().matriz_rapida_2()
-        elif(tipo_matriz == TipoMatriz.rapida3):
-            return GeradorDeMatriz().matriz_rapida_3()
+        return {
+            TipoMatriz.aleatoria: GeradorDeMatriz().gera_matriz_aleatoria,
+            TipoMatriz.rapida1: GeradorDeMatriz().matriz_rapida_1,
+            TipoMatriz.rapida2: GeradorDeMatriz().matriz_rapida_2,
+            TipoMatriz.rapida3: GeradorDeMatriz().matriz_rapida_3
+        }[tipo_matriz]()
 
     def busca_custo_uniforme(self):
         print("\n========================================================================")
@@ -53,7 +51,8 @@ class ControladorBuscas:
         listas.adiciona_estado_se_nao_for_conhecido(estado_inicial)
 
         estado_aberto = listas.abir_nodo()
-        while(estado_aberto.matriz != self.__matriz_final()):
+        matriz_final = GeradorDeMatriz().matriz_final()
+        while(estado_aberto.matriz != matriz_final):
             filhos = estado_aberto.filhos()
             for filho in filhos:
                 listas.adiciona_estado_se_nao_for_conhecido(filho)
@@ -65,7 +64,7 @@ class ControladorBuscas:
         end = time.time()
         self.imprime_caminho(estado_aberto)
         print(f"\nCUSTO (TAMANHO): {estado_aberto.custo}")
-        print(f"NODOS ABERTOS: {len(listas.estados_abertos.lista)}")
+        print(f"NODOS ABERTOS: {len(listas.estados_abertos)}")
         print(f"NODOS VISITADOS: {len(listas.estados_visitados)}")
         print(f"Algoritmo levou {end - start} segundos")
 
@@ -90,10 +89,3 @@ class ControladorBuscas:
             print(f"Custo total (custo + heurística): {atual.custo + atual.heuristica}")
             self.imprime_matriz(atual)
         print('\n============ FIM CAMINHO ============')
-
-    # Estado final do objeto
-    def __matriz_final(self):
-        return [  [1, 2, 3],
-                  [4, 5, 6],
-                  [7, 8, None]
-                ]

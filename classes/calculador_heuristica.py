@@ -8,10 +8,10 @@ class CalculadorHeuristica:
         for i in range(len(self.matriz)):
             for j in range(len(self.matriz[i])):
                 peca_atual = self.matriz[i][j]
-                posicao_final = self.posicoes_finais()[peca_atual]
+                linha_final, coluna_final = self.posicoes_finais()[peca_atual]
 
                 # Se a peça_atual está em sua posição final, retira 1
-                if (i == posicao_final['linha'] and j == posicao_final['coluna']):
+                if (i == linha_final and j == coluna_final):
                     soma -= 1
         return soma
 
@@ -21,22 +21,22 @@ class CalculadorHeuristica:
         for i in range(len(self.matriz)):
             for j in range(len(self.matriz[i])):
                 peca_atual = self.matriz[i][j]
-                posicao_final = self.posicoes_finais()[peca_atual]
+                linha_final, coluna_final = self.posicoes_finais()[peca_atual]
 
                 # Distância da posição atual até a posição final da peça
-                soma += abs(posicao_final['linha'] - i) + abs(posicao_final['coluna'] - j)
+                soma += abs(linha_final - i) + abs(coluna_final - j)
         return soma
 
     @staticmethod
     def posicoes_finais():
         return {
-            1:    { 'linha': 0, 'coluna': 0 },
-            2:    { 'linha': 0, 'coluna': 1 },
-            3:    { 'linha': 0, 'coluna': 2 },
-            4:    { 'linha': 1, 'coluna': 0 },
-            5:    { 'linha': 1, 'coluna': 1 },
-            6:    { 'linha': 1, 'coluna': 2 },
-            7:    { 'linha': 2, 'coluna': 0 },
-            8:    { 'linha': 2, 'coluna': 1 },
-            None: { 'linha': 2, 'coluna': 2 },
+            1:    (0, 0),
+            2:    (0, 1),
+            3:    (0, 2),
+            4:    (1, 0),
+            5:    (1, 1),
+            6:    (1, 2),
+            7:    (2, 0),
+            8:    (2, 1),
+            None: (2, 2)
         }
